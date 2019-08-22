@@ -20,34 +20,35 @@ def setUpGrid():
             col = htmlcolor.MAGENTA
         )
         yPosition = math.ceil(yPosition * 1.2)
-    disp.update()
 
 def drawVerticalLines(width, widthBottom):
     offsetTop = yOffset + 1
     for i in range(16):
-        xposTop = width - i * 10
-        xposBotttom = math.ceil(widthBottom - i * 30)
-        if xposBotttom >= 0 and xposBotttom <= width:
+        xPositionTop = width - i * 10
+        xPositionBotttom = math.ceil(widthBottom - i * 30)
+        if xPositionBotttom >= 0 and xPositionBotttom <= width:
             disp.line(
-                xposTop,
+                xPositionTop,
                 yOffset + 1,
-                xposBotttom,
+                xPositionBotttom,
                 contextHeight,
                 col = htmlcolor.MAGENTA
             )
         else:
-            adjacent = abs(xposBotttom-xposTop)
+            adjacent = abs(xPositionBotttom - xPositionTop)
             opposite = contextHeight - offsetTop
-            print(math.degrees(math.atan(opposite / adjacent)))
-            if xposBotttom < 80:
-                xPos = 0
+            if xPositionBotttom < 80:
+                xPosition = 0
+                xDiff = abs(0 - xPositionBotttom)
             else: 
-                xPos = contextWidth
+                xPosition = contextWidth
+                xDiff = abs(contextWidth - xPositionBotttom)
+            yPosition = xDiff * (opposite / adjacent)
             disp.line(
-                xposTop,
+                xPositionTop,
                 yOffset + 1,
-                xPos,
-                contextHeight,
+                xPosition,
+                math.ceil(contextHeight - yPosition),
                 col = htmlcolor.MAGENTA
             )
     disp.update()
@@ -58,6 +59,7 @@ def loop():
             setUpGrid()
             drawVerticalLines(
                 contextWidth - i,
-                contextWidth * 2 - i * 3)
+                contextWidth * 2 - i * 3
+            )
 
 loop()
