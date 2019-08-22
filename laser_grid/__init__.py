@@ -26,7 +26,7 @@ def drawVerticalLines(width, widthBottom):
     for i in range(16):
         xPositionTop = width - i * 10
         xPositionBotttom = math.ceil(widthBottom - i * 30)
-        if xPositionBotttom >= 0 and xPositionBotttom <= width:
+        if xPositionBotttom >= 0 and xPositionBotttom <= contextWidth:
             disp.line(
                 xPositionTop,
                 yOffset + 1,
