@@ -1,6 +1,8 @@
 import display
 import math
 import htmlcolor
+import leds
+import buttons
 
 disp = display.open()
 yOffset = 9
@@ -54,8 +56,24 @@ def drawVerticalLines(width, widthBottom):
     disp.update()
 
 def loop():
+    ledsOn = True
     while(True):
         for i in range(10):
+            pressed = buttons.read(
+                buttons.BOTTOM_LEFT | buttons.BOTTOM_RIGHT
+            )
+            if pressed:
+                ledsOn = not ledsOn
+            if ledsOn:
+                for j in range(13):
+                    if i < 6:
+                        leds.prep(j, [math.floor(i * 50), 0, math.floor(i * 50)])
+                    else: 
+                        leds.prep(j, [math.floor(255 - i * 50), 0, math.floor(255 - i * 50)])
+            else:
+                for j in range(13):
+                    leds.prep(j, [0, 0, 0])
+            leds.update()
             setUpGrid()
             drawVerticalLines(
                 contextWidth - i,
